@@ -1,0 +1,16 @@
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+dist/
+build/
+out/
+*.exe
+*.dll
+*.so
+*.dmg
+.env
+.env.local
+.env.*.local
