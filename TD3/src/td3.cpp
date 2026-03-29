@@ -33,33 +33,67 @@ void bubble_sort(std::vector<int> &vec)
 }
 
 // MERGE SORT :
-void merge_sort_merge(std::vector<int> & vec, size_t const left, size_t const middle, size_t const right)
+void merge_sort_merge(std::vector<int> &vec, size_t const left, size_t const middle, size_t const right)
 {
-    std::vector<int> left_array {};
-    std::vector<int> right_array {};
+    size_t left_size {middle - left};
+    size_t right_size {right - middle};
 
-    for (int i {0}; i < middle-left ; i++)
+    std::vector<int> left_array(left_size);
+    std::vector<int> right_array(right_size);
+
+    for (int i {0}; i < left_size ; i++)
     {
         left_array[i] = vec[left + i];
     }
 
-    for (int i {0}; i < right-middle ; i++)
+    for (int i {0}; i < right_size ; i++)
     {
         right_array[i] = vec[middle + i];
     }
 
-    
+    size_t i {0}, j {0};
+    size_t k {left};
+
+    while (i < left_size && j < right_size)
+    {
+        if (left_array[i] <= right_array[j])
+        {
+            vec[k] = left_array[i];
+            i++;
+        }
+        else
+        {
+            vec[k] = right_array[j];
+            j++;
+        }
+        
+        k++;
+    }
+
+    while (i < left_size)
+    {
+        vec[k] = left_array[i];
+        k++;
+        i++;
+    }
+
+    while (j < right_size)
+    {
+        vec[k] = right_array[j];
+        k++;
+        j++;
+    }
 }
 
 void merge_sort(std::vector<int> & vec, size_t const left, size_t const right)
 {
-    if (left >= right) // cas de base : vec contient un seul élément ou est vide
+    if (right - left <= 1) // cas de base : vec contient un seul élément ou est vide
     {
         return; // comme merge_sort ne renvoie rien
     }
     else // cas récursif
     {
-        int middle {(left + (right-left))/2};
+        size_t middle = left + (right - left) / 2;
 
         merge_sort(vec, left, middle); // tableau de gauche
         merge_sort(vec, middle, right); // tableau de droite
@@ -68,11 +102,10 @@ void merge_sort(std::vector<int> & vec, size_t const left, size_t const right)
     }
 }
 
-void merge_sort(std::vector<int> & vec) 
+void merge_sort(std::vector<int> &vec) 
 {
-    merge_sort(vec, 0, vec.size() - 1);
+    merge_sort(vec, 0, vec.size());
 }
-
 
 void print_vec(const std::vector<int> &vec)
 {
@@ -82,15 +115,20 @@ void print_vec(const std::vector<int> &vec)
     }
 }
 
-
-
 int main()
 {
     // TESTS : 
-    std::vector<int> array {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> array {9, 8, 7, 6, 5, 4, 3, 2, 1};
 
     //BUBBLE SORT - TEST :
+    std::cout << "bubble :" << std::endl;
     bubble_sort(array);
+    print_vec(array);
+
+    //MERGE SORT - TEST :
+    array = {9, 8, 7, 6, 5, 4, 3, 2, 1};
+    std::cout << "merge : " << std::endl;
+    merge_sort(array);
     print_vec(array);
 
     return 0;
