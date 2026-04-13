@@ -480,6 +480,7 @@ int main()
     // std::cout << (A += B) << std::endl;
     std::cout << (A + Haut) << std::endl;
     std::cout << (A += Haut) << std::endl;
+    
     Position pos {(2, 3)};
     Direction dir = Direction::Haut;
     Position newPos { pos + dir }; // newPos devient (2, 2)
