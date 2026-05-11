@@ -71,16 +71,18 @@ std::unordered_map<IDType, std::pair<float, IDType>> Dijkstra(WeightedGraph cons
 
         for (auto const& arc : graph.get_neighbors(pair.second)) // pour tous ses voisins
         {
-            float new_cost = pair.first + arc.weight;
+            float new_cost = pair.first + (float)arc.weight;
 
-            if (!distances.contains(arc.to) || new_cost < distances[arc.to].first) // s'il n'y est pas déjà ou bien si on a trouvé un meilleur cout que celui qu'on avait trouvé avant 
+            auto const is_visited = distances.find(arc.to);
+
+            if (is_visited != distances.end() && new_cost < distances[arc.to].first) // s'il n'y est pas déjà ou bien si on a trouvé un meilleur cout que celui qu'on avait trouvé avant 
             {
                 distances[arc.to] = {new_cost, pair.second};
                 to_visit.push({new_cost, arc.to});
             }
         }
     }
-    
+
     return distances;
 }
 
